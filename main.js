@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs");
-const csv = require("csv-parser"); // Pustaka csv-parser
+const csv = require("csv-parser");
 
 let window;
 
@@ -11,7 +11,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false, // Pastikan contextIsolation di-set ke false jika menggunakan nodeIntegration
+      contextIsolation: false,
     },
   });
 
@@ -24,11 +24,10 @@ function createWindow() {
 // Fungsi untuk membaca data CSV
 function readCSVData() {
   const results = [];
-  fs.createReadStream(path.join(__dirname, "utility", "games_dataset.csv")) // Path ke file CSV
+  fs.createReadStream(path.join(__dirname, "utility", "games_dataset.csv"))
     .pipe(csv())
-    .on("data", (data) => results.push(data)) // Simpan setiap baris data
+    .on("data", (data) => results.push(data)) 
     .on("end", () => {
-      // Mengirim data ke renderer process setelah CSV selesai dibaca
       console.log("Data yang dibaca:", results); // Debugging log
       window.webContents.send("csv-data", results);
     });

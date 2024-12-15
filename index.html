@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game CSV Data</title>
+  </head>
+  <body>
+    <h1>Game Data from CSV</h1>
+    <table
+      id="csvTable"
+      border="1"
+      style="width: 100%; border-collapse: collapse"
+    >
+      <thead>
+        <tr>
+          <th>Game Title</th>
+          <th>Rating</th>
+          <th>Developer</th>
+          <th>Release Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data CSV akan ditampilkan di sini -->
+      </tbody>
+    </table>
+
+    <script>
+      const { ipcRenderer } = require("electron");
+
+      ipcRenderer.on("csv-data", (event, data) => {
+        console.log("Data diterima di renderer:", data); // Debugging log
+
+        if (data && data.length > 0) {
+          const tableBody = document
+            .getElementById("csvTable")
+            .getElementsByTagName("tbody")[0];
+
+          // Mengosongkan isi tabel sebelum menambah data baru
+          tableBody.innerHTML = "";
+
+          // Menambahkan baris data ke tabel
+          data.forEach((row) => {
+            const newRow = tableBody.insertRow();
+            Object.values(row).forEach((value) => {
+              const cell = newRow.insertCell();
+              cell.textContent = value;
+            });
+          });
+        } else {
+          console.log("Data kosong atau tidak ditemukan.");
+        }
+      });
+    </script>
+  </body>
+</html>

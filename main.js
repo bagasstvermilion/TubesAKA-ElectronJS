@@ -17,11 +17,10 @@ function createWindow() {
 
   window.loadFile("index.html");
 
-  // Mengirim data CSV ke renderer process (frontend)
+   (frontend)
   readCSVData();
 }
 
-// Fungsi untuk membaca data CSV
 function readCSVData() {
   const results = [];
   fs.createReadStream(path.join(__dirname, "utility", "games_dataset.csv"))

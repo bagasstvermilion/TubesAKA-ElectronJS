@@ -27,7 +27,7 @@ function readCSVData() {
     .pipe(csv())
     .on("data", (data) => results.push(data)) 
     .on("end", () => {
-      console.log("Data yang dibaca:", results); // Debugging log
+      console.log("Data yang dibaca:", results);
       window.webContents.send("csv-data", results);
     });
 }

@@ -29,7 +29,7 @@
       const { ipcRenderer } = require("electron");
 
       ipcRenderer.on("csv-data", (event, data) => {
-        console.log("Data diterima di renderer:", data); // Debugging log
+        console.log("Data diterima di renderer:", data);
 
         if (data && data.length > 0) {
           const tableBody = document
